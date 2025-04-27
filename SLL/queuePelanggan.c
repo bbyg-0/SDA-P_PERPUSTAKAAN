@@ -11,10 +11,7 @@ void Isi_Pelanggan (addressPelanggan *p, char* name, char prioritas){
 	if(isEmpty(*p) || isEmpty(p)) return;
 	
 	(*p)->Prioritas = prioritas;
-	(*p)->Nama = (infotype1)malloc(strlen(name)+1);
-	if(isEmpty((*p)->Nama)){printf("\nGAGAL MENGALOKASIKAN MEMORI UNTUK NAMA\n"); return;}
-
-	(*p)->Nama = name;
+	(*p)->Nama = strdup(name);
 }
 
 // head adalah first
@@ -32,13 +29,20 @@ void insertPelanggan (addressHeadPelanggan *head, addressPelanggan *new, address
 	 * 'U' = 85	|
 	 */
 
-	while(temp != (addressPelanggan)buku && (*new)->Prioritas <= temp->Prioritas){
-		temp = temp->next;
+	if((*new)->Prioritas < temp->Prioritas){
+		(*new)->next = temp;
+		temp = (*new);
+		(*head)->start = (*new);
+		return;
 	}
-
-	addressPelanggan tNext = (addressPelanggan)temp->next;
+	while(temp->next != (addressPelanggan)buku){
+		if((*new)->Prioritas >= temp->next->Prioritas)
+		temp = temp->next;
+		else break;
+	}
+	addressPelanggan X = (addressPelanggan)temp->next;
+	(*new)->next = X;
 	temp->next = (*new);
-	(*new)->next = tNext;
 
 	temp = temp2;
 }

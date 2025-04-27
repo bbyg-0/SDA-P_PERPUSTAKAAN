@@ -73,10 +73,18 @@ int main (void){
 	Isi_headPelanggan(&headPelangganTemp, Buku);
 	insertHeadPelanggan(&headPelanggan, &headPelangganTemp);
 	
-	searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, "Massa Actie");
+	searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, "Madilog");
 	if(!isEmpty(Buku)){
 	Create_memory((void **)(&Pelanggan), Q);
 	Isi_Pelanggan (&Pelanggan, "BABA YAGA", 'M');
+	insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
+	Buku = NULL;
+	}
+
+	searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, "Madilog");
+	if(!isEmpty(Buku)){
+	Create_memory((void **)(&Pelanggan), Q);
+	Isi_Pelanggan (&Pelanggan, "BABABA", 'D');
 	insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
 	Buku = NULL;
 	}
@@ -85,6 +93,22 @@ int main (void){
 	if(!isEmpty(Buku)){
 	Create_memory((void **)(&Pelanggan), Q);
 	Isi_Pelanggan (&Pelanggan, "BABA YAGA", 'M');
+	insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
+	Buku = NULL;
+	}
+
+	searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, "Madilog");
+	if(!isEmpty(Buku)){
+	Create_memory((void **)(&Pelanggan), Q);
+	Isi_Pelanggan (&Pelanggan, "BABA", 'M');
+	insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
+	Buku = NULL;
+	}
+
+	searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, "Madilog");
+	if(!isEmpty(Buku)){
+	Create_memory((void **)(&Pelanggan), Q);
+	Isi_Pelanggan (&Pelanggan, "UMUM2", 'U');
 	insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
 	Buku = NULL;
 	}
@@ -139,68 +163,22 @@ int main (void){
 
 				break;
 			}
-			case 3:{
-				Tampil_List(headPelanggan, Q);
-				printEnter();
-				break;
-			}
-			
 			case 4:{
-				Tampil_Node(headPeminjam, QQ);
-				prosesPeminjam(&headPeminjam, &headBuku, &headRiwayat);
-				printEnter();
+				clearScreen();
+				addressBuku tempB1 = headBuku;
+				addressHeadPelanggan tempH1 = headPelanggan;
+
+				while(!isEmpty(headBuku) && !isEmpty(headPelanggan)){
+					Tampil_List(headPelanggan->start, Q, headBuku);
+
+					headBuku = headBuku->next;
+					headPelanggan = headPelanggan->next;
+				}
+				headBuku = tempB1;
+				headPelanggan = tempH1;
 				break;
 			}
 			
-			case 5:{
-				Tampil_List(headPeminjam, QQ);
-				printEnter();
-				break;
-
-				break;
-			}
-
-			case 6:{
-				printf("JUDUL:");
-				secureInputString(InputS1, sizeof(InputS1));
-				addressBuku X = searchBuku(headBuku, InputS1);
-				if(!isEmpty(X)){
-					printf("BUKU SERUPA TELAH ADA DI GUDANG, MENAMBAH STOK BUKU SERUPA\n");
-					X->Stok += 1;
-					printEnter();
-					break;
-				}			
-
-				printf("HARGA:");
-
-				Create_memory((void **)(&Buku), NRLL);
-				Isi_Buku(&Buku, InputS1);
-				insertBuku(&headBuku, &Buku);
-				Tampil_Node(Buku, NRLL);
-				printf("Telah dimasukkan ke rak buku\n");
-				printEnter();
-				break;
-			}
-			case 7:{
-				Tampil_List(headBuku, NRLL);
-				printEnter();
-				break;
-			}
-			case 8:{
-				Tampil_List(headRiwayat, STACK);
-				printEnter();
-				break;
-			}
-			case 9:{
-				popRiwayat(&headRiwayat);
-				printEnter();
-				break;
-			}
-			case 10:{
-				popAllRiwayat(&headRiwayat);
-				printEnter();
-				break;
-			}
 			case 0:{
 				exit(0);
 				}
