@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "common.h"
 #include "menu.h"
@@ -17,8 +16,6 @@ int main (void){
 	addressHeadPelanggan headPelanggan = NULL;
 	addressHeadPelanggan headPelangganTemp = NULL;
 	addressPelanggan Pelanggan = NULL;
-
-	addressPelanggan historyPelanggan = NULL;
 
 	addressRiwayat Rekap = NULL;
 
@@ -75,7 +72,7 @@ int main (void){
 	Create_memory((void **)(&headPelangganTemp), HQ);
 	Isi_headPelanggan(&headPelangganTemp, Buku);
 	insertHeadPelanggan(&headPelanggan, &headPelangganTemp);
-/*	
+	
 	searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, "Madilog");
 	if(!isEmpty(Buku)){
 	Create_memory((void **)(&Pelanggan), Q);
@@ -115,7 +112,6 @@ int main (void){
 	insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
 	Buku = NULL;
 	}
-	*/
 
 
 	int Input = -1;
@@ -139,27 +135,13 @@ int main (void){
 				printf("JUDUL DITEMUKAN\nNAMA ANDA:");
 				secureInputString(InputS1, sizeof(InputS1));
 				
-				printf("MEMINJAM SEBAGAI:\n[status] [input]\n- Dosen 'D'/'d'\n- Mahasiswa 'M'/'m'\n- Umum 'U'/'u'\nchoose:");
-				char inputChar = 'U';
-				inputChar = secureInputChar();
-
-
+				printf("MEMINJAM SEBAGAI:\n[status] [input\n]- Dosen 'D'/'d'\n- Mahasiswa 'M'/'m'\n- Umum 'U'/'u'\nchoose:");
 				Create_memory((void **)(&Pelanggan), Q);
-				Isi_Pelanggan (&Pelanggan, InputS1, inputChar);
+				Isi_Pelanggan (&Pelanggan, InputS1, secureInputChar());
 				insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
+				Buku = NULL;
 				printf("\nPELANGGAN SUDAH MASUK KE ANTRIAN\n");
 				Tampil_Node(Pelanggan, Q);
-		
-				for(int i = 0; i < sizeof(InputS1); i++) InputS1[i] = '\0';
-					
-				strcat(InputS1, "Mengajukan peminjaman buku dengan judul:\n\t");
-				strcat(InputS1, Buku->Judul);
-				strcat(InputS1, "\n");
-
-
-				tambahNote(&Pelanggan, InputS1);
-
-				Buku = NULL;
 				printEnter();	
 				}
 				else{
@@ -178,15 +160,7 @@ int main (void){
 				Tampil_List(headPelangganTemp->start, Q, Buku);
 				printf("NAMA YANG AKAN MEMBATALKAN PEMINJAMANNYA:");
 				secureInputString(InputS2, sizeof(InputS2));
-				printf("DENGAN PRIORITAS:");
-				char InputChar = 'U';
-				InputChar = secureInputChar();
 
-
-				movNode(&historyPelanggan, &headPelangganTemp, InputS2, InputChar, Buku);
-
-			
-				getchar();
 				break;
 			}
 			case 4:{
@@ -202,11 +176,6 @@ int main (void){
 				}
 				headBuku = tempB1;
 				headPelanggan = tempH1;
-				break;
-			}
-			case 5:{
-				clearScreen();
-				Tampil_List(historyPelanggan, Q, NULL);
 				break;
 			}
 			

@@ -93,3 +93,51 @@ void insertHeadPelanggan (addressHeadPelanggan *head, addressHeadPelanggan *new)
 
 }
 
+void tambahNote (addressPelanggan *target, char * note){
+	if(isEmpty(*target)) return;
+
+	addressRiwayat temp = NULL;
+
+	Create_memory((void **)&temp, STACK);
+	Isi_Riwayat(&temp, note);
+	pushRiwayat(&((*target)->note), &temp);
+}
+
+void movNode (addressPelanggan *to, addressHeadPelanggan *from, char * target, char prioritas, void * stop){
+	if(isEmpty(*from)) return;
+
+	addressPelanggan searchTarget = (*from)->start;
+	addressPelanggan temp = (*from)->start;
+
+
+	if(strcmp(searchTarget->Nama, target) == 0 && searchTarget->Prioritas == prioritas){
+		addressPelanggan temp = searchTarget;
+
+		(*from)->start = (addressPelanggan)(*from)->start->next;
+
+		temp->next = (*to);
+		(*to) = temp;
+		return;
+	}
+	searchTarget = searchPelangganBefore((*from)->start, target, prioritas, stop);
+	if(isEmpty(searchTarget)) return;
+
+	addressPelanggan temp2 = searchTarget->next;
+
+	searchTarget->next = searchTarget->next->next;
+
+	temp2->next = (*to);
+	(*to) = temp2;
+
+}
+
+addressPelanggan searchPelangganBefore (addressPelanggan head, char * nama, char prioritas, void * stop){
+	if(isEmpty(head)) return NULL;
+	if(strcmp(nama, head->Nama) == 0 && prioritas == head->Prioritas) return head;
+
+	while(head->next != stop){
+		if(strcmp(nama, head->next->Nama) == 0 && prioritas == head->next->Prioritas) return head;
+		head = head->next;
+	}
+	return NULL;
+}

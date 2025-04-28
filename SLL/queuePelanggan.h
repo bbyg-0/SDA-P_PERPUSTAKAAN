@@ -36,4 +36,10 @@ void Isi_headPelanggan (addressHeadPelanggan *target, void * start);
 
 void insertHeadPelanggan (addressHeadPelanggan *head, addressHeadPelanggan *newPelanggan);
 
+void tambahNote (addressPelanggan *target, char * note);
+
+void movNode (addressPelanggan *to, addressHeadPelanggan *from, char * target, char prioritas, void * stop);
+
+addressPelanggan searchPelangganBefore (addressPelanggan head, char * nama, char prioritas, void * stop);
+
 #endif

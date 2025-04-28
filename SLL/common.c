@@ -123,7 +123,10 @@ void Tampil_List (void * node, DataType data, void * x){
 			break;
 		}
 		case Q:{
-			printf("ANTRIAN PEMINJAM BUKU [%s]:\n", ((addressBuku)(x))->Judul);
+			if(!isEmpty(x))
+				printf("ANTRIAN PEMINJAM BUKU [%s]:\n", ((addressBuku)(x))->Judul);
+			else
+				printf("LIST:\n");
 			addressPelanggan temp = (addressPelanggan)(node);
 			while(temp != (addressPelanggan)x){
 				printf("%s\t\t[%c]\n", temp->Nama, temp->Prioritas);
