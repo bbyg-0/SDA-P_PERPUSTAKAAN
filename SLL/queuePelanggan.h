@@ -14,6 +14,7 @@ typedef struct p2 *addressHeadPelanggan;
 
 typedef struct p2{
 	addressPelanggan start;
+	addressPelanggan peminjam;
 	addressHeadPelanggan next;
 } headPelanggan;
 
@@ -38,8 +39,10 @@ void insertHeadPelanggan (addressHeadPelanggan *head, addressHeadPelanggan *newP
 
 void tambahNote (addressPelanggan *target, char * note);
 
-void movNode (addressPelanggan *to, addressHeadPelanggan *from, char * target, char prioritas, void * stop);
+void movNode (addressPelanggan *to, addressPelanggan *from, char * target, char prioritas, void * stop);
 
 addressPelanggan searchPelangganBefore (addressPelanggan head, char * nama, char prioritas, void * stop);
+
+void insertFirstPelanggan (addressPelanggan *head, addressPelanggan *node);
 
 #endif

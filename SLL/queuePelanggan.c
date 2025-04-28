@@ -79,6 +79,7 @@ void Isi_headPelanggan (addressHeadPelanggan *target, void * start){
 	if(isEmpty(*target) || isEmpty(target)) return;
 	
 	(*target)->start = start;
+	(*target)->peminjam = start;
 }
 
 // head adalah first
@@ -103,23 +104,23 @@ void tambahNote (addressPelanggan *target, char * note){
 	pushRiwayat(&((*target)->note), &temp);
 }
 
-void movNode (addressPelanggan *to, addressHeadPelanggan *from, char * target, char prioritas, void * stop){
+void movNode (addressPelanggan *to, addressPelanggan *from, char * target, char prioritas, void * stop){
 	if(isEmpty(*from)) return;
 
-	addressPelanggan searchTarget = (*from)->start;
-	addressPelanggan temp = (*from)->start;
+	addressPelanggan searchTarget = (*from);
+	addressPelanggan temp = (*from);
 
 
 	if(strcmp(searchTarget->Nama, target) == 0 && searchTarget->Prioritas == prioritas){
 		addressPelanggan temp = searchTarget;
 
-		(*from)->start = (addressPelanggan)(*from)->start->next;
+		(*from) = (addressPelanggan)(*from)->next;
 
 		temp->next = (*to);
 		(*to) = temp;
 		return;
 	}
-	searchTarget = searchPelangganBefore((*from)->start, target, prioritas, stop);
+	searchTarget = searchPelangganBefore((*from), target, prioritas, stop);
 	if(isEmpty(searchTarget)) return;
 
 	addressPelanggan temp2 = searchTarget->next;
@@ -140,4 +141,11 @@ addressPelanggan searchPelangganBefore (addressPelanggan head, char * nama, char
 		head = head->next;
 	}
 	return NULL;
+}
+
+void insertFirstPelanggan(addressPelanggan *head, addressPelanggan *node){
+	if(isEmpty(*node)) return;
+
+	(*node)->next = (*head);
+	(*head) = (*node);
 }

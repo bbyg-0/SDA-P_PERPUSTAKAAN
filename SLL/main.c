@@ -143,10 +143,15 @@ int main (void){
 				char inputChar = 'U';
 				inputChar = secureInputChar();
 
+				Pelanggan = NULL;
+				movNode(&Pelanggan, &historyPelanggan, InputS1, inputChar, NULL);
+				if(isEmpty(Pelanggan)){
+					Create_memory((void **)(&Pelanggan), Q);
+					Isi_Pelanggan (&Pelanggan, InputS1, inputChar);
+				}
 
-				Create_memory((void **)(&Pelanggan), Q);
-				Isi_Pelanggan (&Pelanggan, InputS1, inputChar);
 				insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
+
 				printf("\nPELANGGAN SUDAH MASUK KE ANTRIAN\n");
 				Tampil_Node(Pelanggan, Q);
 		
@@ -183,11 +188,41 @@ int main (void){
 				InputChar = secureInputChar();
 
 
-				movNode(&historyPelanggan, &headPelangganTemp, InputS2, InputChar, Buku);
+				movNode(&Pelanggan, &(headPelangganTemp->start), InputS2, InputChar, Buku);
+				
+				for(int i = 0; i < sizeof(InputS1); i++) InputS1[i] = '\0';
+					
+				strcat(InputS1, "Membatalkan pengajuan peminjaman buku:\n\t");
+				strcat(InputS1, Buku->Judul);
+				strcat(InputS1, "\n");
 
+				tambahNote(&Pelanggan, InputS1);
+
+				insertFirstPelanggan(&historyPelanggan, &Pelanggan);
 			
 				getchar();
 				break;
+			}
+			case 3:{
+				clearScreen();
+				Tampil_List(headBuku, NRLL, NULL);
+
+				printf("PILIH ANTRIAN BUKU DARI JUDUL:");
+				secureInputString(InputS1, sizeof(InputS1));
+				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1);
+				if(isEmpty(Buku)){ printf("Judul tidak ditemukan"); break;}
+				Tampil_List(headPelangganTemp->start, Q, Buku);
+
+				movNode(&Pelanggan, &(headPelangganTemp->start), (headPelangganTemp->start->Nama), (headPelangganTemp->start->Prioritas), Buku);
+
+				for(int i = 0; i < sizeof(InputS1); i++) InputS1[i] = '\0';
+					
+				strcat(InputS1, "Memproses :\n\t");
+				strcat(InputS1, Buku->Judul);
+				strcat(InputS1, "\n");
+
+
+
 			}
 			case 4:{
 				clearScreen();

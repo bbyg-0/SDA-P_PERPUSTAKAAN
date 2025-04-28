@@ -37,6 +37,7 @@ void Create_memory (void ** node, DataType data){
 			}
 			addressHeadPelanggan pelanggan = (addressHeadPelanggan)(*node);
 			pelanggan->start = NULL;
+			pelanggan->peminjam = NULL;
 			pelanggan->next = NULL;
 			break;
 		}
