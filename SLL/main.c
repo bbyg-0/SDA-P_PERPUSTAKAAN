@@ -310,6 +310,31 @@ int main (void){
 				getchar();
 				break;
 			}
+			case 8:{
+				clearScreen();
+				Tampil_List(headBuku, NRLL, NULL);
+				break;
+			}
+			case 9:{
+				clearScreen();
+				Tampil_List(headBuku, NRLL, NULL);
+
+				secureInputString(InputS1, sizeof(InputS1));
+				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1);
+				if(!isEmpty(Buku)){
+					Buku->Stok++;
+					Buku = NULL;
+					break;
+				}
+				Create_memory((void **)(&Buku), NRLL);
+				Isi_Buku(&Buku, InputS1);
+				insertBuku(&headBuku, &Buku);
+				Create_memory((void **)(&headPelangganTemp), HQ);
+				Isi_headPelanggan(&headPelangganTemp, Buku);
+				insertHeadPelanggan(&headPelanggan, &headPelangganTemp);
+
+				break;
+			}
 			
 			case 0:{
 				exit(0);
