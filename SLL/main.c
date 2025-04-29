@@ -216,13 +216,17 @@ int main (void){
 
 				movNode(&Pelanggan, &(headPelangganTemp->start), (headPelangganTemp->start->Nama), (headPelangganTemp->start->Prioritas), Buku);
 
+				printf("MEMPROSES %s [%c]\n", (Pelanggan)->Nama, (Pelanggan)->Prioritas);
+
 				for(int i = 0; i < sizeof(InputS1); i++) InputS1[i] = '\0';
 					
 				strcat(InputS1, "Memproses :\n\t");
 				strcat(InputS1, Buku->Judul);
 				strcat(InputS1, "\n");
 
+				movNode(&(headPelangganTemp->peminjam), &Pelanggan, Pelanggan->Nama, (Pelanggan)->Prioritas, NULL);
 
+				break;
 
 			}
 			case 4:{
@@ -241,6 +245,49 @@ int main (void){
 				break;
 			}
 			case 5:{
+				clearScreen();
+				Tampil_List(headBuku, NRLL, NULL);
+
+				printf("PILIH JUDUL:");
+				secureInputString(InputS1, sizeof(InputS1));
+				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1);
+				if(isEmpty(Buku)){ printf("Judul tidak ditemukan"); break;}
+				Tampil_List(headPelangganTemp->peminjam, Q, Buku);
+				printf("NAMA YANG AKAN MENGEMBALIKAN BUKU:");
+				secureInputString(InputS2, sizeof(InputS2));
+				printf("DENGAN PRIORITAS:");
+				char InputChar = 'U';
+				InputChar = secureInputChar();
+
+
+				movNode(&Pelanggan, &(headPelangganTemp->peminjam), InputS2, InputChar, Buku);
+				if(isEmpty(Pelanggan)) break;
+				
+				for(int i = 0; i < sizeof(InputS1); i++) InputS1[i] = '\0';
+					
+				strcat(InputS1, "Mengembalikan buku:\n\t");
+				strcat(InputS1, Buku->Judul);
+				strcat(InputS1, "\n");
+
+				tambahNote(&Pelanggan, InputS1);
+
+				insertFirstPelanggan(&historyPelanggan, &Pelanggan);
+			
+				getchar();
+				break;
+			}
+			case 6:{
+				clearScreen();
+				Tampil_List(headBuku, NRLL, NULL);
+
+				printf("PILIH BUKU:");
+				secureInputString(InputS1, sizeof(InputS1));
+				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1);
+				if(isEmpty(Buku)){ printf("Judul tidak ditemukan"); break;}
+				Tampil_List(headPelangganTemp->peminjam, Q, Buku);
+				break;
+			}
+			case 7:{
 				clearScreen();
 				Tampil_List(historyPelanggan, Q, NULL);
 				break;

@@ -105,7 +105,7 @@ void tambahNote (addressPelanggan *target, char * note){
 }
 
 void movNode (addressPelanggan *to, addressPelanggan *from, char * target, char prioritas, void * stop){
-	if(isEmpty(*from)) return;
+	if((*from) == stop) return;
 
 	addressPelanggan searchTarget = (*from);
 	addressPelanggan temp = (*from);
