@@ -13,7 +13,7 @@ typedef struct buku{
 #include "common.h"
 #include "queuePelanggan.h"
 
-void Isi_Buku (addressBuku *p, char* title);
+void Isi_Buku (addressBuku *p, char* title, unsigned int stok);
 
 void insertBuku (addressBuku *head, addressBuku *newBuku);
 

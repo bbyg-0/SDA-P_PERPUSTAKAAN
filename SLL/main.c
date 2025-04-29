@@ -23,22 +23,14 @@ int main (void){
 	addressRiwayat Rekap = NULL;
 
 	Create_memory((void **)(&Buku), NRLL);
-	Isi_Buku(&Buku, "The Silence of the Lambs");
+	Isi_Buku(&Buku, "The Silence of the Lambs", 4);
 	insertBuku(&headBuku, &Buku);
 	Create_memory((void **)(&headPelangganTemp), HQ);
 	Isi_headPelanggan(&headPelangganTemp, Buku);
 	insertHeadPelanggan(&headPelanggan, &headPelangganTemp);
 
 	Create_memory((void **)(&Buku), NRLL);
-	Isi_Buku(&Buku, "Politik Militer Indonesia 1945-1967");
-	insertBuku(&headBuku, &Buku);
-	Create_memory((void **)(&headPelangganTemp), HQ);
-	Isi_headPelanggan(&headPelangganTemp, Buku);
-	insertHeadPelanggan(&headPelanggan, &headPelangganTemp);
-
-
-	Create_memory((void **)(&Buku), NRLL);
-	Isi_Buku(&Buku, "Massa Actie");
+	Isi_Buku(&Buku, "Politik Militer Indonesia 1945-1967", 2);
 	insertBuku(&headBuku, &Buku);
 	Create_memory((void **)(&headPelangganTemp), HQ);
 	Isi_headPelanggan(&headPelangganTemp, Buku);
@@ -46,7 +38,7 @@ int main (void){
 
 
 	Create_memory((void **)(&Buku), NRLL);
-	Isi_Buku(&Buku, "Dari Penjara ke Penjara");
+	Isi_Buku(&Buku, "Massa Actie", 6);
 	insertBuku(&headBuku, &Buku);
 	Create_memory((void **)(&headPelangganTemp), HQ);
 	Isi_headPelanggan(&headPelangganTemp, Buku);
@@ -54,7 +46,7 @@ int main (void){
 
 
 	Create_memory((void **)(&Buku), NRLL);
-	Isi_Buku(&Buku, "Anarkis untuk Pemula");
+	Isi_Buku(&Buku, "Dari Penjara ke Penjara", 2);
 	insertBuku(&headBuku, &Buku);
 	Create_memory((void **)(&headPelangganTemp), HQ);
 	Isi_headPelanggan(&headPelangganTemp, Buku);
@@ -62,7 +54,7 @@ int main (void){
 
 
 	Create_memory((void **)(&Buku), NRLL);
-	Isi_Buku(&Buku, "Madilog");
+	Isi_Buku(&Buku, "Anarkis untuk Pemula", 3);
 	insertBuku(&headBuku, &Buku);
 	Create_memory((void **)(&headPelangganTemp), HQ);
 	Isi_headPelanggan(&headPelangganTemp, Buku);
@@ -70,7 +62,15 @@ int main (void){
 
 
 	Create_memory((void **)(&Buku), NRLL);
-	Isi_Buku(&Buku, "il Principe: Buku Pedoman para Diktator");
+	Isi_Buku(&Buku, "Madilog", 1);
+	insertBuku(&headBuku, &Buku);
+	Create_memory((void **)(&headPelangganTemp), HQ);
+	Isi_headPelanggan(&headPelangganTemp, Buku);
+	insertHeadPelanggan(&headPelanggan, &headPelangganTemp);
+
+
+	Create_memory((void **)(&Buku), NRLL);
+	Isi_Buku(&Buku, "il Principe: Buku Pedoman para Diktator", 2);
 	insertBuku(&headBuku, &Buku);
 	Create_memory((void **)(&headPelangganTemp), HQ);
 	Isi_headPelanggan(&headPelangganTemp, Buku);
@@ -141,13 +141,18 @@ int main (void){
 				
 				printf("MEMINJAM SEBAGAI:\n[status] [input]\n- Dosen 'D'/'d'\n- Mahasiswa 'M'/'m'\n- Umum 'U'/'u'\nchoose:");
 				char inputChar = 'U';
-				inputChar = secureInputChar();
+				inputChar = upperChar(secureInputChar());
 
 				Pelanggan = NULL;
 				movNode(&Pelanggan, &historyPelanggan, InputS1, inputChar, NULL);
 				if(isEmpty(Pelanggan)){
 					Create_memory((void **)(&Pelanggan), Q);
 					Isi_Pelanggan (&Pelanggan, InputS1, inputChar);
+				}
+				if(Buku->Stok != 1){
+					Buku->Stok--;
+					movNode(&(headPelangganTemp->peminjam), &Pelanggan, (Pelanggan)->Nama, (Pelanggan)->Prioritas, Buku);
+					break;
 				}
 
 				insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
@@ -185,7 +190,7 @@ int main (void){
 				secureInputString(InputS2, sizeof(InputS2));
 				printf("DENGAN PRIORITAS:");
 				char InputChar = 'U';
-				InputChar = secureInputChar();
+				InputChar = upperChar(secureInputChar());
 
 
 				movNode(&Pelanggan, &(headPelangganTemp->start), InputS2, InputChar, Buku);
@@ -214,12 +219,14 @@ int main (void){
 				if(isEmpty(Buku)){ printf("Judul tidak ditemukan"); break;}
 				Tampil_List(headPelangganTemp->start, Q, Buku);
 
+				if(Buku->Stok <= 0){printf("\nSTOK BUKU KOSONG, MEMBATALKAN PROSES\n"); break;}
 				movNode(&Pelanggan, &(headPelangganTemp->start), (headPelangganTemp->start->Nama), (headPelangganTemp->start->Prioritas), Buku);
 
 				printf("MEMPROSES %s [%c]\n", (Pelanggan)->Nama, (Pelanggan)->Prioritas);
 
 				for(int i = 0; i < sizeof(InputS1); i++) InputS1[i] = '\0';
-					
+				
+				Buku->Stok--;
 				strcat(InputS1, "Memproses :\n\t");
 				strcat(InputS1, Buku->Judul);
 				strcat(InputS1, "\n");
@@ -257,7 +264,7 @@ int main (void){
 				secureInputString(InputS2, sizeof(InputS2));
 				printf("DENGAN PRIORITAS:");
 				char InputChar = 'U';
-				InputChar = secureInputChar();
+				InputChar = upperChar(secureInputChar());
 
 
 				movNode(&Pelanggan, &(headPelangganTemp->peminjam), InputS2, InputChar, Buku);
@@ -270,6 +277,8 @@ int main (void){
 				strcat(InputS1, "\n");
 
 				tambahNote(&Pelanggan, InputS1);
+
+				Buku->Stok++;
 
 				insertFirstPelanggan(&historyPelanggan, &Pelanggan);
 			
@@ -293,14 +302,14 @@ int main (void){
 
 				char InputChar = 'Y';
 				printf("Melihat lebih lanjut [Y/N]: ");
-				InputChar = secureInputChar();
+				InputChar = upperChar(secureInputChar());
 				if(InputChar != 'Y') break;
 
 				printf("NAMA:");
 				secureInputString(InputS2, sizeof(InputS2));
 				printf("DENGAN PRIORITAS:");
 				InputChar = 'U';
-				InputChar = secureInputChar();
+				InputChar = upperChar(secureInputChar());
 
 
 				addressPelanggan view = searchPelanggan(historyPelanggan, InputS2, InputChar, NULL, CURRENT);
@@ -313,11 +322,7 @@ int main (void){
 			case 8:{
 				clearScreen();
 				Tampil_List(headBuku, NRLL, NULL);
-				break;
-			}
-			case 9:{
-				clearScreen();
-				Tampil_List(headBuku, NRLL, NULL);
+				printf("JUDUL BUKU:");
 
 				secureInputString(InputS1, sizeof(InputS1));
 				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1);
@@ -326,8 +331,9 @@ int main (void){
 					Buku = NULL;
 					break;
 				}
+				printf("KOLEKSI BUKU BERTAMBAH!!");
 				Create_memory((void **)(&Buku), NRLL);
-				Isi_Buku(&Buku, InputS1);
+				Isi_Buku(&Buku, InputS1, 1);
 				insertBuku(&headBuku, &Buku);
 				Create_memory((void **)(&headPelangganTemp), HQ);
 				Isi_headPelanggan(&headPelangganTemp, Buku);
@@ -336,6 +342,11 @@ int main (void){
 				break;
 			}
 			
+			case 9:{
+				clearScreen();
+				Tampil_List(headBuku, NRLL, NULL);
+				break;
+			}
 			case 0:{
 				exit(0);
 				}

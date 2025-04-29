@@ -45,4 +45,6 @@ void clearInput_buffer();
 
 void printEnter();
 
+char upperChar(char x);
+
 #endif

@@ -309,3 +309,13 @@ void clearInput_buffer() {
 void printEnter(){
 	printf("Tekan ENTER untuk melanjutkan!!");
 }
+
+char upperChar(char x){
+	if(x >= 97 && x <= 122){	//kalo lowecase dikurang 32 jadi uppercase
+		return (char)(x-32);
+	}else if(x >= 65 && x <= 90){	//kalo uppercase ya uppercase
+		return x;
+	}
+
+	return (char)85;		//kalo ngaco ya defaultnya 'U'
+}

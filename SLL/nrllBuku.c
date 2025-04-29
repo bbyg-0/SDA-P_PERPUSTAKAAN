@@ -5,12 +5,14 @@
 #include "common.h"
 #include "nrllBuku.h"
 
-void Isi_Buku (addressBuku *p, char* title){
+void Isi_Buku (addressBuku *p, char* title, unsigned int stok){
 	if(isEmpty((void *)(*p))) return;
 	
 	(*p)->Judul = (infotype1) malloc(strlen(title)+1);
 	if(isEmpty((*p)->Judul)) {printf("\nGAGAL MENGALOKASIKAN MEMORI UNTUK JUDUL\n"); return;}
 	(*p)->Judul = title;
+
+	(*p)->Stok = stok;
 }
 
 void insertBuku (addressBuku *head, addressBuku *new){
