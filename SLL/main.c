@@ -290,6 +290,24 @@ int main (void){
 			case 7:{
 				clearScreen();
 				Tampil_List(historyPelanggan, Q, NULL);
+
+				char InputChar = 'Y';
+				printf("Melihat lebih lanjut [Y/N]: ");
+				InputChar = secureInputChar();
+				if(InputChar != 'Y') break;
+
+				printf("NAMA:");
+				secureInputString(InputS2, sizeof(InputS2));
+				printf("DENGAN PRIORITAS:");
+				InputChar = 'U';
+				InputChar = secureInputChar();
+
+
+				addressPelanggan view = searchPelanggan(historyPelanggan, InputS2, InputChar, NULL, CURRENT);
+				if(isEmpty(view)) break;
+				Tampil_List(view->note, STACK, NULL);
+
+				getchar();
 				break;
 			}
 			

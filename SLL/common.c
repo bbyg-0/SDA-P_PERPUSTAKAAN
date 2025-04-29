@@ -136,7 +136,7 @@ void Tampil_List (void * node, DataType data, void * x){
 			break;
 		}
 		case STACK:{
-			printf("DAFTAR RIWAYAT PENJUALAN:\n");
+			printf("DAFTAR RIWAYAT AKTIVITAS:\n");
 			addressRiwayat temp = (addressRiwayat)(node);
 			while(!isEmpty(temp)){
 				printf("%s\n", (temp)->Rekap);

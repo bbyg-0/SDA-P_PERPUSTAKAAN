@@ -25,6 +25,11 @@ typedef struct p{
 	addressPelanggan next;
 } Pelanggan;
 
+typedef enum{
+	BEFORE,
+	CURRENT
+} position;
+
 #include "common.h"
 
 void Isi_Pelanggan (addressPelanggan *p, char* name, char prioritas);
@@ -41,7 +46,7 @@ void tambahNote (addressPelanggan *target, char * note);
 
 void movNode (addressPelanggan *to, addressPelanggan *from, char * target, char prioritas, void * stop);
 
-addressPelanggan searchPelangganBefore (addressPelanggan head, char * nama, char prioritas, void * stop);
+addressPelanggan searchPelanggan (addressPelanggan head, char * nama, char prioritas, void * stop, position X);
 
 void insertFirstPelanggan (addressPelanggan *head, addressPelanggan *node);
 

@@ -120,7 +120,7 @@ void movNode (addressPelanggan *to, addressPelanggan *from, char * target, char 
 		(*to) = temp;
 		return;
 	}
-	searchTarget = searchPelangganBefore((*from), target, prioritas, stop);
+	searchTarget = searchPelanggan((*from), target, prioritas, stop, BEFORE);
 	if(isEmpty(searchTarget)) {searchTarget = temp; (*to) = NULL; return;}
 
 	addressPelanggan temp2 = searchTarget->next;
@@ -132,15 +132,28 @@ void movNode (addressPelanggan *to, addressPelanggan *from, char * target, char 
 
 }
 
-addressPelanggan searchPelangganBefore (addressPelanggan head, char * nama, char prioritas, void * stop){
-	if(isEmpty(head)) return NULL;
-	if(strcmp(nama, head->Nama) == 0 && prioritas == head->Prioritas) return head;
+addressPelanggan searchPelanggan (addressPelanggan head, char * nama, char prioritas, void * stop, position X){
+	switch(X){
+		case BEFORE:{
+			if(isEmpty(head)) return NULL;
+			if(strcmp(nama, head->Nama) == 0 && prioritas == head->Prioritas) return head;
 
-	while(head->next != stop){
-		if(strcmp(nama, head->next->Nama) == 0 && prioritas == head->next->Prioritas) return head;
-		head = head->next;
+			while(head->next != stop){
+				if(strcmp(nama, head->next->Nama) == 0 && prioritas == head->next->Prioritas) return head;
+				head = head->next;
+			}
+			return NULL;
+		}
+		case CURRENT:{
+			if(isEmpty(head)) return NULL;
+			while(head != stop){
+				if(strcmp(nama, head->Nama) == 0 && prioritas == head->Prioritas) return head;
+				head = head->next;
+			}
+			return NULL;
+
+		}
 	}
-	return NULL;
 }
 
 void insertFirstPelanggan(addressPelanggan *head, addressPelanggan *node){
