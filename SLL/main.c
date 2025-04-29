@@ -20,8 +20,6 @@ int main (void){
 
 	addressPelanggan historyPelanggan = NULL;
 
-	addressRiwayat Rekap = NULL;
-
 	Create_memory((void **)(&Buku), NRLL);
 	Isi_Buku(&Buku, "The Silence of the Lambs", 4);
 	insertBuku(&headBuku, &Buku);
@@ -160,7 +158,7 @@ int main (void){
 				printf("\nPELANGGAN SUDAH MASUK KE ANTRIAN\n");
 				Tampil_Node(Pelanggan, Q);
 		
-				for(int i = 0; i < sizeof(InputS1); i++) InputS1[i] = '\0';
+				for(int i = 0; i < (int)sizeof(InputS1); i++) InputS1[i] = '\0';
 					
 				strcat(InputS1, "Mengajukan peminjaman buku dengan judul:\n\t");
 				strcat(InputS1, Buku->Judul);
@@ -196,7 +194,7 @@ int main (void){
 				movNode(&Pelanggan, &(headPelangganTemp->start), InputS2, InputChar, Buku);
 				if(isEmpty(Pelanggan)) break;
 				
-				for(int i = 0; i < sizeof(InputS1); i++) InputS1[i] = '\0';
+				for(int i = 0; i < (int)sizeof(InputS1); i++) InputS1[i] = '\0';
 					
 				strcat(InputS1, "Membatalkan pengajuan peminjaman buku:\n\t");
 				strcat(InputS1, Buku->Judul);
@@ -224,7 +222,7 @@ int main (void){
 
 				printf("MEMPROSES %s [%c]\n", (Pelanggan)->Nama, (Pelanggan)->Prioritas);
 
-				for(int i = 0; i < sizeof(InputS1); i++) InputS1[i] = '\0';
+				for(int i = 0; i < (int)sizeof(InputS1); i++) InputS1[i] = '\0';
 				
 				Buku->Stok--;
 				strcat(InputS1, "Memproses :\n\t");
@@ -270,7 +268,7 @@ int main (void){
 				movNode(&Pelanggan, &(headPelangganTemp->peminjam), InputS2, InputChar, Buku);
 				if(isEmpty(Pelanggan)) break;
 				
-				for(int i = 0; i < sizeof(InputS1); i++) InputS1[i] = '\0';
+				for(int i = 0; i < (int)sizeof(InputS1); i++) InputS1[i] = '\0';
 					
 				strcat(InputS1, "Mengembalikan buku:\n\t");
 				strcat(InputS1, Buku->Judul);

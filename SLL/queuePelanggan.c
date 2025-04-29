@@ -11,7 +11,7 @@ void Isi_Pelanggan (addressPelanggan *p, char* name, char prioritas){
 	if(isEmpty(*p) || isEmpty(p)) return;
 	
 	(*p)->Prioritas = prioritas;
-	(*p)->Nama = strdup(name);
+	(*p)->Nama = myStrdup(name);
 }
 
 // head adalah first
@@ -153,7 +153,13 @@ addressPelanggan searchPelanggan (addressPelanggan head, char * nama, char prior
 			return NULL;
 
 		}
+		default:{
+			printf("\nENUM TIDAK DIKENALI\n");
+			break;
+		}
 	}
+
+	return NULL;
 }
 
 void insertFirstPelanggan(addressPelanggan *head, addressPelanggan *node){

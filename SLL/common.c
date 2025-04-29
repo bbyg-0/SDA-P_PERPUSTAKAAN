@@ -79,18 +79,6 @@ void DeAlokasiBuku (addressBuku *node){
 	(*node) = NULL;
 }
 
-void DeAlokasiPelanggan (addressPelanggan *node){
-	/*
-	if(isEmpty(node) || isEmpty(*node)) return;
-	free((*node)->Nama);
-	(*node)->Nama = NULL;
-	DeAlokasiBuku (&(*node)->Buku);
-	(*node)->Buku = NULL;
-	free(*node);
-	(*node) = NULL;
-	*/
-}
-
 void DeAlokasiRiwayat (addressRiwayat *node){
 	if(isEmpty(node) || isEmpty(*node)) return;
 	
@@ -156,6 +144,9 @@ void Tampil_Node (void * node, DataType data){
 			printf("%s\n", (temp)->Judul);	
 			break;
 		}
+		case HQ:{
+			break;
+		}
 		case Q:{
 			addressPelanggan temp = (addressPelanggan)(node);
 			printf("%s", temp->Nama);
@@ -180,8 +171,8 @@ char * UShortToString (unsigned short X, char * Result){
 		X /= 10;
 		index++;
 	}
-	for(int i = 0; i < strlen(result); i++){
-		Result[i] = result[strlen(result)-1-i];
+	for(int i = 0; i < (int)strlen(result); i++){
+		Result[i] = result[(int)strlen(result)-1-i];
 	}
 
 	return Result;
@@ -264,7 +255,7 @@ char secureInputChar() {
 	
 		if (valid) {
 			value = buffer[0];
-			return value;
+			return (char)value;
 		} else {
 			printf("Input tidak valid! Masukkan karakter: ");
 		}
@@ -319,3 +310,15 @@ char upperChar(char x){
 
 	return (char)85;		//kalo ngaco ya defaultnya 'U'
 }
+
+char* myStrdup(const char* input) {
+	if (input == NULL) return NULL;
+	
+	size_t len = strlen(input) + 1;
+	char* dst = malloc(len);
+	
+	if (dst != NULL) memcpy(dst, input, len);
+
+    return dst;
+}
+

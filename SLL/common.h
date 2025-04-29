@@ -19,8 +19,6 @@ void Create_memory (void ** node, DataType data);
 
 void DeAlokasiBuku (addressBuku * node);
 
-void DeAlokasiPelanggan (addressPelanggan *node);
-
 void DeAlokasiRiwayat (addressRiwayat *node);
 
 void Tampil_List (void * node, DataType data, void * x);
@@ -46,5 +44,7 @@ void clearInput_buffer();
 void printEnter();
 
 char upperChar(char x);
+
+char* myStrdup(const char * input);
 
 #endif

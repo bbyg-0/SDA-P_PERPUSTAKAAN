@@ -9,7 +9,7 @@
 void Isi_Riwayat (addressRiwayat (*p), char * nota){
 	if(isEmpty(*p)) return;
 
-	(*p)->Rekap = strdup(nota);
+	(*p)->Rekap = myStrdup(nota);
 }
 
 void pushRiwayat (addressRiwayat *head, addressRiwayat *new){

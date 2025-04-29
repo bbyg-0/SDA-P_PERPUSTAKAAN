@@ -28,7 +28,6 @@ void insertBuku (addressBuku *head, addressBuku *new){
 void borrowSearch (addressBuku *head, char* titleTarget){
 	if(isEmpty((*head))) return;
 	
-	addressBuku temp = NULL;
 	addressBuku T = (*head);
 
 	while(!isEmpty(*head)){
