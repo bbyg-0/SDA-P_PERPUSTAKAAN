@@ -121,7 +121,7 @@ void movNode (addressPelanggan *to, addressPelanggan *from, char * target, char 
 		return;
 	}
 	searchTarget = searchPelangganBefore((*from), target, prioritas, stop);
-	if(isEmpty(searchTarget)) return;
+	if(isEmpty(searchTarget)) {searchTarget = temp; (*to) = NULL; return;}
 
 	addressPelanggan temp2 = searchTarget->next;
 

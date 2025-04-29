@@ -189,6 +189,7 @@ int main (void){
 
 
 				movNode(&Pelanggan, &(headPelangganTemp->start), InputS2, InputChar, Buku);
+				if(isEmpty(Pelanggan)) break;
 				
 				for(int i = 0; i < sizeof(InputS1); i++) InputS1[i] = '\0';
 					
