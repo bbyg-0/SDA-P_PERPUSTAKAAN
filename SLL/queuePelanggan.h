@@ -34,7 +34,11 @@ typedef enum{
 
 void Isi_Pelanggan (addressPelanggan *p, char* name, char prioritas);
 
-void insertPelanggan (addressHeadPelanggan *head, addressPelanggan *newPelanggan, addressBuku buku);
+void insertPelanggan (addressHeadPelanggan *head, addressPelanggan *history, addressBuku buku, char * input1, char input2);
+
+void batalkanPelanggan (addressHeadPelanggan *head, addressPelanggan *history, addressBuku buku, char * input1, char input2);
+
+void pelangganMengembalikan (addressHeadPelanggan *head, addressPelanggan *history, addressBuku buku, char * input1, char input2);
 
 void prosesPelanggan (addressHeadPelanggan *head, addressBuku target);
 

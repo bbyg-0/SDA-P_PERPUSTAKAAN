@@ -16,7 +16,6 @@ int main (void){
 
 	addressHeadPelanggan headPelanggan = NULL;
 	addressHeadPelanggan headPelangganTemp = NULL;
-	addressPelanggan Pelanggan = NULL;
 
 	addressPelanggan historyPelanggan = NULL;
 
@@ -124,8 +123,10 @@ int main (void){
 		clearScreen();
 		mainMenu();
 		Input = secureInputInt();
+		Buku = NULL; headPelangganTemp = NULL;
 		switch(Input){
 			case 1:{//MENAMBAH PENGAJUAN PEMINJAMAN
+				//TAMPIL DAN INPUT
 				clearScreen();
 				Tampil_List(headBuku, NRLL, NULL);
 
@@ -141,31 +142,9 @@ int main (void){
 				char inputChar = 'U';
 				inputChar = upperChar(secureInputChar());
 
-				Pelanggan = NULL;
-				movNode(&Pelanggan, &historyPelanggan, InputS1, inputChar, NULL);
-				if(isEmpty(Pelanggan)){
-					Create_memory((void **)(&Pelanggan), Q);
-					Isi_Pelanggan (&Pelanggan, InputS1, inputChar);
-				}
-				if(Buku->Stok != 1){
-					Buku->Stok--;
-					movNode(&(headPelangganTemp->peminjam), &Pelanggan, (Pelanggan)->Nama, (Pelanggan)->Prioritas, Buku);
-					break;
-				}
 
-				insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
-
-				printf("\nPELANGGAN SUDAH MASUK KE ANTRIAN\n");
-				Tampil_Node(Pelanggan, Q);
-		
-				for(int i = 0; i < (int)sizeof(InputS1); i++) InputS1[i] = '\0';
-					
-				strcat(InputS1, "Mengajukan peminjaman buku dengan judul:\n\t");
-				strcat(InputS1, Buku->Judul);
-				strcat(InputS1, "\n");
-
-
-				tambahNote(&Pelanggan, InputS1);
+				//PROSES
+				insertPelanggan(&headPelangganTemp, &historyPelanggan, Buku, InputS1, inputChar);
 
 				Buku = NULL;
 				printEnter();	
@@ -176,6 +155,7 @@ int main (void){
 				}
 				break;}
 			case 2:{//CANCEL PENGAJUAN PEMINJAMAN
+				//TAMPIL DAN INPUT
 				clearScreen();
 				Tampil_List(headBuku, NRLL, NULL);
 
@@ -190,24 +170,14 @@ int main (void){
 				char InputChar = 'U';
 				InputChar = upperChar(secureInputChar());
 
-
-				movNode(&Pelanggan, &(headPelangganTemp->start), InputS2, InputChar, Buku);
-				if(isEmpty(Pelanggan)) break;
-				
-				for(int i = 0; i < (int)sizeof(InputS1); i++) InputS1[i] = '\0';
-					
-				strcat(InputS1, "Membatalkan pengajuan peminjaman buku:\n\t");
-				strcat(InputS1, Buku->Judul);
-				strcat(InputS1, "\n");
-
-				tambahNote(&Pelanggan, InputS1);
-
-				insertFirstPelanggan(&historyPelanggan, &Pelanggan);
+				//PROSES
+				batalkanPelanggan(&headPelangganTemp, &historyPelanggan, Buku, InputS2, InputChar);
 			
 				getchar();
 				break;
 			}
 			case 3:{
+				//TAMPIL DAN INPUT
 				clearScreen();
 				Tampil_List(headBuku, NRLL, NULL);
 
@@ -217,20 +187,8 @@ int main (void){
 				if(isEmpty(Buku)){ printf("Judul tidak ditemukan"); break;}
 				Tampil_List(headPelangganTemp->start, Q, Buku);
 
-				if(Buku->Stok <= 0){printf("\nSTOK BUKU KOSONG, MEMBATALKAN PROSES\n"); break;}
-				movNode(&Pelanggan, &(headPelangganTemp->start), (headPelangganTemp->start->Nama), (headPelangganTemp->start->Prioritas), Buku);
-
-				printf("MEMPROSES %s [%c]\n", (Pelanggan)->Nama, (Pelanggan)->Prioritas);
-
-				for(int i = 0; i < (int)sizeof(InputS1); i++) InputS1[i] = '\0';
-				
-				Buku->Stok--;
-				strcat(InputS1, "Memproses :\n\t");
-				strcat(InputS1, Buku->Judul);
-				strcat(InputS1, "\n");
-
-				movNode(&(headPelangganTemp->peminjam), &Pelanggan, Pelanggan->Nama, (Pelanggan)->Prioritas, NULL);
-
+				//PROSES
+				prosesPelanggan (&headPelangganTemp, Buku);
 				break;
 
 			}
@@ -264,22 +222,8 @@ int main (void){
 				char InputChar = 'U';
 				InputChar = upperChar(secureInputChar());
 
-
-				movNode(&Pelanggan, &(headPelangganTemp->peminjam), InputS2, InputChar, Buku);
-				if(isEmpty(Pelanggan)) break;
-				
-				for(int i = 0; i < (int)sizeof(InputS1); i++) InputS1[i] = '\0';
-					
-				strcat(InputS1, "Mengembalikan buku:\n\t");
-				strcat(InputS1, Buku->Judul);
-				strcat(InputS1, "\n");
-
-				tambahNote(&Pelanggan, InputS1);
-
-				Buku->Stok++;
-
-				insertFirstPelanggan(&historyPelanggan, &Pelanggan);
-			
+				//PROSES
+				pelangganMengembalikan(&headPelangganTemp, &historyPelanggan, Buku, InputS2, InputChar);
 				getchar();
 				break;
 			}

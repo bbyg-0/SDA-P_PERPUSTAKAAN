@@ -15,10 +15,37 @@ void Isi_Pelanggan (addressPelanggan *p, char* name, char prioritas){
 }
 
 // head adalah first
-void insertPelanggan (addressHeadPelanggan *head, addressPelanggan *new, addressBuku buku){
-	if((*head)->start == (addressPelanggan)buku){
-		(*new)->next = (addressPelanggan)buku;
-		(*head)->start = (*new);
+void insertPelanggan (addressHeadPelanggan *head, addressPelanggan *history, addressBuku Buku, char * input1, char input2){
+	addressPelanggan Pelanggan = NULL;
+
+	movNode(&Pelanggan, history, input1, input2, NULL);
+	if(isEmpty(Pelanggan)){
+		Create_memory((void **)(&Pelanggan), Q);
+		Isi_Pelanggan (&Pelanggan, input1, input2);
+	}
+	if(Buku->Stok > 1){
+		Buku->Stok--;
+		movNode(&((*head)->peminjam), &Pelanggan, (Pelanggan)->Nama, (Pelanggan)->Prioritas, Buku);
+					
+		strcat(input1, "Meminjam buku dengan judul:\n\t");
+		strcat(input1, Buku->Judul);
+		strcat(input1, "\n");
+				
+		tambahNote(&Pelanggan, input1);
+		return;
+	}
+
+	
+	for (int i = 0; i < (int)sizeof(input1); i++)input1[i] = '\0';
+
+	strcat(input1, "Mengajukan peminjaman buku dengan judul:\n\t");
+	strcat(input1, Buku->Judul);
+	strcat(input1, "\n");
+				
+	tambahNote(&Pelanggan, input1);
+	if((*head)->start == (addressPelanggan)Buku){
+		(Pelanggan)->next = (addressPelanggan)Buku;
+		(*head)->start = (Pelanggan);
 		return;
 	}
 	addressPelanggan temp = (*head)->start;
@@ -29,49 +56,87 @@ void insertPelanggan (addressHeadPelanggan *head, addressPelanggan *new, address
 	 * 'U' = 85	|
 	 */
 
-	if((*new)->Prioritas < temp->Prioritas){
-		(*new)->next = temp;
-		temp = (*new);
-		(*head)->start = (*new);
+	if((Pelanggan)->Prioritas < temp->Prioritas){
+		(Pelanggan)->next = temp;
+		temp = (Pelanggan);
+		(*head)->start = (Pelanggan);
 		return;
 	}
-	while(temp->next != (addressPelanggan)buku){
-		if((*new)->Prioritas >= temp->next->Prioritas)
+	while(temp->next != (addressPelanggan)Buku){
+		if((Pelanggan)->Prioritas >= temp->next->Prioritas)
 		temp = temp->next;
 		else break;
 	}
 	addressPelanggan X = (addressPelanggan)temp->next;
-	(*new)->next = X;
-	temp->next = (*new);
+	(Pelanggan)->next = X;
+	temp->next = (Pelanggan);
 
 	temp = temp2;
+
 }
 
+void batalkanPelanggan (addressHeadPelanggan *head, addressPelanggan *history, addressBuku Buku, char * input1, char input2){
+
+	addressPelanggan Pelanggan = NULL;
+	addressHeadPelanggan headPelangganTemp = (*head);
+
+	movNode(&Pelanggan, &(headPelangganTemp->start), input1, input2, Buku);
+	if(isEmpty(Pelanggan)){printf("KOSONG BRADA!!"); return;}
+		
+	for(int i = 0; i < (int)sizeof(input1); i++) input1[i] = '\0';
+					
+	strcat(input1, "Membatalkan pengajuan peminjaman buku:\n\t");
+	strcat(input1, Buku->Judul);
+	strcat(input1, "\n");
+
+	tambahNote(&Pelanggan, input1);
+
+	insertFirstPelanggan(history, &Pelanggan);
+}
+
+void pelangganMengembalikan (addressHeadPelanggan *head, addressPelanggan *history, addressBuku Buku, char * input1, char input2){
+	
+	addressPelanggan Pelanggan = NULL;
+	addressHeadPelanggan headPelangganTemp = (*head);
+
+	movNode(&Pelanggan, &(headPelangganTemp->peminjam), input1, input2, Buku);
+	if(isEmpty(Pelanggan)) return;
+				
+	for(int i = 0; i < (int)sizeof(input1); i++) input1[i] = '\0';
+					
+	strcat(input1, "Mengembalikan buku:\n\t");
+	strcat(input1, Buku->Judul);
+	strcat(input1, "\n");
+
+	tambahNote(&Pelanggan, input1);
+
+	Buku->Stok++;
+
+	insertFirstPelanggan(history, &Pelanggan);
+
+}
 //head adalah first
 void prosesPelanggan (addressHeadPelanggan *head, addressBuku target){
 	if(isEmpty(head) || isEmpty(*head)) {return;}
 	if(isEmpty(target)) {return;}
-	
-	addressPelanggan temp = (*head)->start;
-	addressPelanggan temp2 = (*head)->start;
 
-	//first :wq
-	while((addressBuku)temp->next != target){
-		temp = temp->next;
-	}
-	
+	char InputS1[100] = {0};
+	addressPelanggan Pelanggan = 0;
 
-	addressRiwayat new = NULL;
-	Create_memory((void *)&new, STACK);
+	if(target->Stok <= 0){printf("\nSTOK BUKU KOSONG, MEMBATALKAN PROSES\n"); return;}
+	movNode(&Pelanggan, &((*head)->start), ((*head)->start->Nama), ((*head)->start->Prioritas), target);
 
-	char X[100]= {0};
-	strcat(X, "yadayadayada");
-	Isi_Riwayat(&new, X);
-	pushRiwayat(&(temp->note), &new);
+	printf("MEMPROSES %s [%c]\n", (Pelanggan)->Nama, (Pelanggan)->Prioritas);
 	
-	addressBuku buku = (addressBuku)(*head)->next;
-	buku->Stok -= 1;
-	temp = temp2;
+	target->Stok--;
+	strcat(InputS1, "Memproses :\n\t");
+	strcat(InputS1, target->Judul);
+	strcat(InputS1, "\n");
+
+	tambahNote(&Pelanggan, InputS1);
+
+	movNode(&((*head)->peminjam), &Pelanggan, Pelanggan->Nama, (Pelanggan)->Prioritas, NULL);
+
 }
 
 // start dibuat generic karena nanti dia bisa addressBuku atau addressPelanggan
