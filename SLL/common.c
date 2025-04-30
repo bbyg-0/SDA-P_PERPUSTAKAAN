@@ -71,21 +71,46 @@ void Create_memory (void ** node, DataType data){
 	}
 }
 
-void DeAlokasiBuku (addressBuku *node){
+void DeAlokasi (void ** node, DataType X){
 	if(isEmpty(node) || isEmpty(*node)) return;
-	free((*node)->Judul);
-	(*node)->Judul = NULL;
-	free(*node);
-	(*node) = NULL;
-}
+	switch(X){
+		case Q:{
+			break;
+	       }
+		case HQ:{
+			free((addressHeadPelanggan)(*node));
+			(*node) = NULL;
+			break;
+	       }
+		case NRLL:{
+			addressBuku temp = (addressBuku)(*node);
 
-void DeAlokasiRiwayat (addressRiwayat *node){
-	if(isEmpty(node) || isEmpty(*node)) return;
-	
-	free((*node)->Rekap);
-	(*node)->Rekap = NULL;
-	free(*node);
-	(*node) = NULL;
+			//GWEJH GAK BISA ALOKASI CHAR * ARGGGGHHHHHHHH
+			//free(((char *)(temp)->Judul));
+			(temp)->Judul = NULL;
+			free((addressBuku)temp);
+			(temp) = NULL;
+			break;
+		}
+		case STACK:{
+			addressRiwayat temp = (addressRiwayat)(*node);
+			free((char *)(temp)->Rekap);
+			(temp)->Rekap = NULL;
+			free((addressRiwayat)temp);
+			(temp) = NULL;
+			break;
+		   }
+		default:{
+			break;
+		}
+	}
+}
+void DeAlokasiCharP (infotype1 *target){
+	if(isEmpty(*target)) return;
+
+	printf("%ld", sizeof(&target));
+	//free(*target);
+	(*target) = NULL;
 }
 
 void Tampil_List (void * node, DataType data, void * x){

@@ -72,48 +72,6 @@ int main (void){
 	Create_memory((void **)(&headPelangganTemp), HQ);
 	Isi_headPelanggan(&headPelangganTemp, Buku);
 	insertHeadPelanggan(&headPelanggan, &headPelangganTemp);
-/*	
-	searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, "Madilog");
-	if(!isEmpty(Buku)){
-	Create_memory((void **)(&Pelanggan), Q);
-	Isi_Pelanggan (&Pelanggan, "BABA YAGA", 'M');
-	insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
-	Buku = NULL;
-	}
-
-	searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, "Madilog");
-	if(!isEmpty(Buku)){
-	Create_memory((void **)(&Pelanggan), Q);
-	Isi_Pelanggan (&Pelanggan, "BABABA", 'D');
-	insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
-	Buku = NULL;
-	}
-
-	searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, "Anarkis untuk Pemula");
-	if(!isEmpty(Buku)){
-	Create_memory((void **)(&Pelanggan), Q);
-	Isi_Pelanggan (&Pelanggan, "BABA YAGA", 'M');
-	insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
-	Buku = NULL;
-	}
-
-	searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, "Madilog");
-	if(!isEmpty(Buku)){
-	Create_memory((void **)(&Pelanggan), Q);
-	Isi_Pelanggan (&Pelanggan, "BABA", 'M');
-	insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
-	Buku = NULL;
-	}
-
-	searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, "Madilog");
-	if(!isEmpty(Buku)){
-	Create_memory((void **)(&Pelanggan), Q);
-	Isi_Pelanggan (&Pelanggan, "UMUM2", 'U');
-	insertPelanggan (&headPelangganTemp, &Pelanggan, Buku);
-	Buku = NULL;
-	}
-	*/
-
 
 	int Input = -1;
 	char InputS1[50] = {0};
@@ -133,7 +91,7 @@ int main (void){
 				printf("JUDUL APA YANG ANDA INGINKAN:");
 				secureInputString(InputS1, sizeof(InputS1));
 				
-				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1);
+				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1, CURRENT);
 				if(!isEmpty(Buku)){
 				printf("JUDUL DITEMUKAN\nNAMA ANDA:");
 				secureInputString(InputS1, sizeof(InputS1));
@@ -161,7 +119,7 @@ int main (void){
 
 				printf("PILIH JUDUL:");
 				secureInputString(InputS1, sizeof(InputS1));
-				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1);
+				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1, CURRENT);
 				if(isEmpty(Buku)){ printf("Judul tidak ditemukan"); break;}
 				Tampil_List(headPelangganTemp->start, Q, Buku);
 				printf("NAMA YANG AKAN MEMBATALKAN PEMINJAMANNYA:");
@@ -183,7 +141,7 @@ int main (void){
 
 				printf("PILIH ANTRIAN BUKU DARI JUDUL:");
 				secureInputString(InputS1, sizeof(InputS1));
-				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1);
+				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1, CURRENT);
 				if(isEmpty(Buku)){ printf("Judul tidak ditemukan"); break;}
 				Tampil_List(headPelangganTemp->start, Q, Buku);
 
@@ -213,7 +171,7 @@ int main (void){
 
 				printf("PILIH JUDUL:");
 				secureInputString(InputS1, sizeof(InputS1));
-				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1);
+				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1, CURRENT);
 				if(isEmpty(Buku)){ printf("Judul tidak ditemukan"); break;}
 				Tampil_List(headPelangganTemp->peminjam, Q, Buku);
 				printf("NAMA YANG AKAN MENGEMBALIKAN BUKU:");
@@ -233,7 +191,7 @@ int main (void){
 
 				printf("PILIH BUKU:");
 				secureInputString(InputS1, sizeof(InputS1));
-				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1);
+				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1, CURRENT);
 				if(isEmpty(Buku)){ printf("Judul tidak ditemukan"); break;}
 				Tampil_List(headPelangganTemp->peminjam, Q, Buku);
 				break;
@@ -257,6 +215,20 @@ int main (void){
 				addressPelanggan view = searchPelanggan(historyPelanggan, InputS2, InputChar, NULL, CURRENT);
 				if(isEmpty(view)) break;
 				Tampil_List(view->note, STACK, NULL);
+			
+				historyMenu();
+				Input = secureInputInt();
+				switch(Input){
+					case 1:{
+						       break;
+					       }
+					case 2:{
+						       break;
+					       }
+					default:{
+							break;
+						}
+				}
 
 				getchar();
 				break;
@@ -267,7 +239,7 @@ int main (void){
 				printf("JUDUL BUKU:");
 
 				secureInputString(InputS1, sizeof(InputS1));
-				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1);
+				searchBuku (headBuku, &Buku, headPelanggan, &headPelangganTemp, InputS1, CURRENT);
 				if(!isEmpty(Buku)){
 					Buku->Stok++;
 					Buku = NULL;
@@ -283,15 +255,26 @@ int main (void){
 
 				break;
 			}
-			
 			case 9:{
+				clearScreen();
+				Tampil_List(headBuku, NRLL, NULL);
+				printf("JUDUL BUKU:");
+
+				secureInputString(InputS1, sizeof(InputS1));
+				deleteBuku (&headBuku, &Buku, &headPelanggan, &headPelangganTemp, InputS1);
+				break;
+			}
+			
+			case 10:{
 				clearScreen();
 				Tampil_List(headBuku, NRLL, NULL);
 				break;
 			}
 			case 0:{
 				exit(0);
+				break;
 				}
+			
 			default:{
 				printf("Input invalid, masukkan angka 1-8\n");
 				printf("Tekan ENTER untuk melanjutkan");

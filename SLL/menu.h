@@ -3,5 +3,7 @@
 
 void mainMenu();
 
+void historyMenu();
+
 #endif
 

@@ -17,9 +17,9 @@ bool isEmpty (void * node);
 
 void Create_memory (void ** node, DataType data);
 
-void DeAlokasiBuku (addressBuku * node);
+void DeAlokasi (void ** node, DataType X);
 
-void DeAlokasiRiwayat (addressRiwayat *node);
+void DeAlokasiCharP (char ** target);
 
 void Tampil_List (void * node, DataType data, void * x);
 

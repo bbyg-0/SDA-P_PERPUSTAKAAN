@@ -26,7 +26,7 @@ void popRiwayat (addressRiwayat *head){
 	
 	addressRiwayat temp = (*head)->next;
 	printf("Data akan dihapus:\n%s", (*head)->Rekap);
-	DeAlokasiRiwayat(head);
+	DeAlokasi((void **)head, STACK);
 	(*head) = temp;
 }
 
