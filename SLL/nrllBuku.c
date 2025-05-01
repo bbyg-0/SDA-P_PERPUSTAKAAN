@@ -9,7 +9,6 @@ void Isi_Buku (addressBuku *p, char* title, unsigned int stok){
 	if(isEmpty((void *)(*p))) return;
 	
 	(*p)->Judul = myStrdup(title);
-	(*p)->Judul = title;
 
 	(*p)->Stok = stok;
 }

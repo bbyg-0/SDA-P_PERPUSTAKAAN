@@ -108,8 +108,7 @@ void DeAlokasi (void ** node, DataType X){
 void DeAlokasiCharP (infotype1 *target){
 	if(isEmpty(*target)) return;
 
-	printf("%ld", sizeof(&target));
-	//free(*target);
+	free(*target);
 	(*target) = NULL;
 }
 
