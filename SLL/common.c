@@ -75,6 +75,13 @@ void DeAlokasi (void ** node, DataType X){
 	if(isEmpty(node) || isEmpty(*node)) return;
 	switch(X){
 		case Q:{
+			addressPelanggan temp = (addressPelanggan)(*node);
+
+			free((char *)temp->Nama);
+			(temp)->Nama = NULL;
+			free((addressPelanggan)temp);
+			temp = NULL;
+
 			break;
 	       }
 		case HQ:{
@@ -85,8 +92,7 @@ void DeAlokasi (void ** node, DataType X){
 		case NRLL:{
 			addressBuku temp = (addressBuku)(*node);
 
-			//GWEJH GAK BISA ALOKASI CHAR * ARGGGGHHHHHHHH
-			//free(((char *)(temp)->Judul));
+			free(((char *)(temp)->Judul));
 			(temp)->Judul = NULL;
 			free((addressBuku)temp);
 			(temp) = NULL;

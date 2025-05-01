@@ -27,7 +27,7 @@ int main (void){
 	insertHeadPelanggan(&headPelanggan, &headPelangganTemp);
 
 	Create_memory((void **)(&Buku), NRLL);
-	Isi_Buku(&Buku, "Politik Militer Indonesia 1945-1967", 2);
+	Isi_Buku(&Buku, "Politik Militer Indonesia", 2);
 	insertBuku(&headBuku, &Buku);
 	Create_memory((void **)(&headPelangganTemp), HQ);
 	Isi_headPelanggan(&headPelangganTemp, Buku);
@@ -67,7 +67,7 @@ int main (void){
 
 
 	Create_memory((void **)(&Buku), NRLL);
-	Isi_Buku(&Buku, "il Principe: Buku Pedoman para Diktator", 2);
+	Isi_Buku(&Buku, "il Principe", 2);
 	insertBuku(&headBuku, &Buku);
 	Create_memory((void **)(&headPelangganTemp), HQ);
 	Isi_headPelanggan(&headPelangganTemp, Buku);
@@ -218,12 +218,26 @@ int main (void){
 			
 				historyMenu();
 				Input = secureInputInt();
+				char inputChar = 'U';
 				switch(Input){
 					case 1:{
-						       break;
+						       printf("\nARE YOU SURE?('Y'/'y' to continue)\nchoose:");
+							inputChar = upperChar(secureInputChar());
+
+							if(inputChar != 'Y') break;
+
+							popAllRiwayat(&(view->note));
+							break;
 					       }
 					case 2:{
-						       break;
+							printf("\nARE YOU SURE?('Y'/'y' to continue)\nchoose:");
+							inputChar = upperChar(secureInputChar());
+							if(inputChar != 'Y') break;
+
+							popAllRiwayat(&(view->note));
+							deletePelanggan(&historyPelanggan, InputS2, InputChar);
+
+							break;
 					       }
 					default:{
 							break;

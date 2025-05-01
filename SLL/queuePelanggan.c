@@ -10,6 +10,8 @@
 void Isi_Pelanggan (addressPelanggan *p, char* name, char prioritas){
 	if(isEmpty(*p) || isEmpty(p)) return;
 	
+	if(prioritas != 'D' && prioritas != 'M') prioritas = 'U';
+
 	(*p)->Prioritas = prioritas;
 	(*p)->Nama = myStrdup(name);
 }
@@ -25,13 +27,13 @@ void insertPelanggan (addressHeadPelanggan *head, addressPelanggan *history, add
 	}
 	if(Buku->Stok > 1){
 		Buku->Stok--;
-		movNode(&((*head)->peminjam), &Pelanggan, (Pelanggan)->Nama, (Pelanggan)->Prioritas, Buku);
-					
+		for (int i = 0; i < (int)sizeof(input1); i++)input1[i] = '\0';
 		strcat(input1, "Meminjam buku dengan judul:\n\t");
 		strcat(input1, Buku->Judul);
 		strcat(input1, "\n");
 				
 		tambahNote(&Pelanggan, input1);
+		movNode(&((*head)->peminjam), &Pelanggan, (Pelanggan)->Nama, (Pelanggan)->Prioritas, Buku);		
 		return;
 	}
 
@@ -232,4 +234,23 @@ void insertFirstPelanggan(addressPelanggan *head, addressPelanggan *node){
 
 	(*node)->next = (*head);
 	(*head) = (*node);
+}
+
+void deletePelanggan (addressPelanggan *head, char * input1, char input2){
+	if(isEmpty(*head)) return;
+
+	addressPelanggan temp = (*head)->next;
+
+	if(strcmp((*head)->Nama, input1) == 0 && input2 == (*head)->Prioritas){
+		DeAlokasi((void **)head, Q);
+		(*head) = temp;
+		return;
+	}
+	temp = searchPelanggan((*head), input1, input2, NULL, BEFORE);
+
+	if(isEmpty(temp)) return;
+	addressPelanggan x = temp->next;
+
+	temp->next = temp->next->next;
+	free(x);	
 }

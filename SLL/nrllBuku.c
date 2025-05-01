@@ -89,8 +89,6 @@ void deleteBuku (addressBuku *head1, addressBuku * flag1, addressHeadPelanggan *
 			addressBuku temp1 = (*head1)->next;
 			addressHeadPelanggan temp2 = (*head2)->next;
 
-			DeAlokasiCharP(&((*head1)->Judul));
-
 			DeAlokasi((void **)head1, NRLL);
 			DeAlokasi((void **)head2, HQ);
 
@@ -102,7 +100,9 @@ void deleteBuku (addressBuku *head1, addressBuku * flag1, addressHeadPelanggan *
 	}
 
 	searchBuku(*head1, flag1, *head2, flag2, titleTarget, BEFORE);
-	if(isEmpty(*flag1) || isEmpty(*flag2)){
+	if(!isEmpty(*flag1) && !isEmpty(*flag2)){
+		if((*flag2)->next->start == (addressPelanggan)(*flag1) && (*flag2)->next->peminjam == (addressPelanggan)(*flag1)){
+
 		addressBuku temp1 = (*flag1)->next;
 		addressHeadPelanggan temp2 = (*flag2)->next;
 
@@ -110,11 +110,12 @@ void deleteBuku (addressBuku *head1, addressBuku * flag1, addressHeadPelanggan *
 		(*flag2)->next = (*flag2)->next->next;
 
 
-		DeAlokasi((void **)temp1, NRLL);
-		DeAlokasi((void **)temp2, HQ);	
+		DeAlokasi((void **)&temp1, NRLL);
+		DeAlokasi((void **)&temp2, HQ);	
 		printf("\nBUKU TELAH DIHAPUS DARI KOLEKSI\n");
 
 		return;
+		}else{printf("\nMASIH ADA YANG BERINTERAKSI DENGAN KOLEKSI INI\n"); return;}
 	}
 
 	printf("\nTARGET TIDAK DITEMUKAN\n");

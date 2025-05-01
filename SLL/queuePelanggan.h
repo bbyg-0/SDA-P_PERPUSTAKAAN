@@ -54,4 +54,6 @@ addressPelanggan searchPelanggan (addressPelanggan head, char * nama, char prior
 
 void insertFirstPelanggan (addressPelanggan *head, addressPelanggan *node);
 
+void deletePelanggan (addressPelanggan *head, char * input1, char input2);
+
 #endif
