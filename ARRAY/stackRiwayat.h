@@ -1,7 +1,6 @@
 #pragma once
 #include "common.h"
 
-typedef struct p *addressPelanggan;
 
 typedef char* infotype5;
 typedef struct riwayat *addressRiwayat;
@@ -18,5 +17,3 @@ void pushRiwayat (addressRiwayat *head, addressRiwayat *newRiwayat);
 void popRiwayat (addressRiwayat *head);
 
 void popAllRiwayat (addressRiwayat *head);
-
-void dataMerging(addressPelanggan (*to), addressPelanggan(*fromBefore));

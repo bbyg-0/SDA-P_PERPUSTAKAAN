@@ -36,9 +36,3 @@ void popAllRiwayat (addressRiwayat *head){
 		popRiwayat(head);
 	}
 }
-
-void dataMerging (addressPelanggan *to, addressPelanggan (*fromBefore)){
-	if(isEmpty(*fromBefore) || isEmpty(*to)) return;
-
-
-}
